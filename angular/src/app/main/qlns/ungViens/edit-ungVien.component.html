@@ -1,0 +1,592 @@
+﻿<style>
+	.form-group {
+		margin-bottom: 0.7rem !important;
+	}
+
+	.comment-container {
+		margin-bottom: 4rem;
+	}
+
+	.avatar {
+		height: 40px;
+	}
+
+	.common-container {
+		display: flex;
+		margin-bottom: 1rem;
+	}
+
+	.content-container {
+		background-color: #f5f6f8;
+		border-radius: 0.75em;
+		width: 100%;
+		margin-left: 2rem;
+		padding: 1rem;
+	}
+
+	.content-container>div>span.username-content {
+		display: block;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: blue;
+	}
+
+	.delete-cmt-icon {
+		color: black;
+		float: right;
+		background-color: white;
+		width: 15px;
+		text-align: center;
+	}
+
+	.delete-cmt-icon:hover {
+		color: black;
+		float: right;
+		background-color: #ccc9c0;
+		width: 15px;
+		text-align: center;
+	}
+</style>
+<div>
+	<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+		<div class="kt-subheader kt-grid__item">
+			<div [class]="containerClass">
+				<div class="kt-subheader__main">
+					<div class="col-xl-12" style="padding-top: 5px;">
+						<dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+						&nbsp;
+						<dx-button text="Lưu" type="success" icon="save" style="width: 127px;" (onClick)="save()">
+						</dx-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+			<div class="kt-portlet kt-portlet--mobile">
+
+
+				<div class="kt-portlet__body">
+					<div class="kt-subheader__main">
+						<h3 class="kt-subheader__title">
+							<span> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Chỉnh sửa ứng viên ")}} </span>
+						</h3>
+
+					</div>
+					<br>
+					<br>
+					<form #ungVienForm="ngForm" novalidate autocomplete="off">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="required" for="UngVien_HoVaTen">{{l("HoVaTen")}}<i
+											class="form-control-feedback">(*)</i></label>
+									<input #tenUV="ngModel" type="text" id="UngVien_HoVaTen" class="form-control"
+										[(ngModel)]="ungVien.hoVaTen" name="HoVaTen" required
+										pattern="[^ ](.*|\n|\r|\r\n)*" />
+									<div *ngIf="tenUV.invalid && (tenUV.dirty || tenUV.touched)" class="has-danger ">
+										<div class="form-control-feedback" *ngIf="tenUV?.errors.required">
+											Trường này là bắt buộc.
+										</div>
+										<div class="form-control-feedback" *ngIf="tenUV?.errors.pattern">
+											Không nhập ký tự trắng đầu tiên.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_MaUngVien">{{l("MaUngVien")}}</label>
+									<input type="text" id="UngVien_MaUngVien" readonly disabled class="form-control"
+										[(ngModel)]="ungVien.maUngVien" name="MaUngVien" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_ViTriUngTuyenCode">{{l("ViTriUngTuyenCode")}}</label>
+									<select class="form-control" id="UngVien_ViTriUngTuyenCode"
+										[(ngModel)]="ungVien.viTriUngTuyenCode" name="ViTriUngTuyenCode">
+										<option *ngFor="let item of viTriCongViec" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_KenhTuyenDungCode">{{l("KenhTuyenDungCode")}}</label>
+									<select class="form-control" id="UngVien_KenhTuyenDungCode"
+										[(ngModel)]="ungVien.kenhTuyenDungCode" name="KenhTuyenDungCode">
+										<option *ngFor="let item of kenhTuyenDung" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_GioiTinhCode">{{l("GioiTinhCode")}}</label>
+									<select class="form-control" id="UngVien_GioiTinhCode"
+										[(ngModel)]="ungVien.gioiTinhCode" name="GioiTinhCode">
+										<option *ngFor="let item of gioiTinh" [ngValue]="item.cdName">{{item.value}}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_NgaySinh">{{l("NgaySinh")}}</label>
+									<div class="inner-addon right-addon">
+										<input class="display-inline form-control m-input" type="datetime" bsDatepicker
+											[(ngModel)]="ngaySinh" id="UngVien_NgaySinh" name="UngVien_NgaySinh">
+										<!-- <i class="icon flaticon-calendar-1"></i> -->
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_TinhTrangHonNhanCode">{{l("TinhTrangHonNhanCode")}}</label>
+									<select class="form-control" id="UngVien_TinhTrangHonNhanCode"
+										[(ngModel)]="ungVien.tinhTrangHonNhanCode" name="TinhTrangHonNhanCode">
+										<option *ngFor="let item of tinhTrangHonNhan" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_SoCMND">{{l("SoCMND")}}</label>
+									<input type="text" id="UngVien_SoCMND" class="form-control"
+										[(ngModel)]="ungVien.soCMND" name="SoCMND" />
+								</div>
+								<!-- <div class="form-group">
+									<label for="UngVien_NgaySinh">{{l("NgaySinh")}}</label>
+									<input class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="ngaySinh" id="UngVien_NgaySinh" name="UngVien_NgaySinh">
+								</div> -->
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_NgayCap">{{l("NgayCap")}}</label>
+									<div class="inner-addon right-addon">
+										<input class="form-control m-input" type="datetime" bsDatepicker
+											[(ngModel)]="ngayCap" id="UngVien_NgayCap" name="UngVien_NgayCap">
+										<!-- <i class="icon flaticon-calendar-1"></i> -->
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_TrinhDoVanHoa">{{l("TrinhDoVanHoa")}}</label>
+									<input placeholder="Nhập trình độ văn hóa, ví dụ 12/12" type="text"
+										id="UngVien_TrinhDoVanHoa" class="form-control"
+										[(ngModel)]="ungVien.trinhDoVanHoa" name="TrinhDoVanHoa" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_TenCTY">{{l("Công ty")}}</label>
+									<select class="form-control" id="UngVien_TenCTY" [(ngModel)]="ungVien.tenCTY"
+										name="UngVien_TenCTY" (click)="mouseClick(ungVien.tenCTY)" >
+										<option *ngFor="let item of congty" [ngValue]="item.value">{{item.value}}
+										</option>
+									</select>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_NoiCap">{{l("NoiCap")}}</label>
+									<input type="text" id="UngVien_NoiCap" class="form-control"
+										[(ngModel)]="ungVien.noiCap" name="NoiCap" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_TrinhDoDaoTaoCode">{{l("TrinhDoDaoTaoCode")}}</label>
+									<select class="form-control" id="UngVien_TrinhDoDaoTaoCode"
+										[(ngModel)]="ungVien.trinhDoDaoTaoCode" name="TrinhDoDaoTaoCode">
+										<option *ngFor="let item of trinhDoDaoTao" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_DienThoai">{{l("DienThoai")}}</label>
+									<input type="text" id="UngVien_DienThoai" class="form-control"
+										[(ngModel)]="ungVien.dienThoai" name="DienThoai" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_Email">{{l("Email")}}</label>
+									<input type="email" id="UngVien_Email" class="form-control"
+										[(ngModel)]="ungVien.email" email name="Email" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_NoiDaoTaoID">{{l("NoiDaoTaoID")}}</label>
+									<select class="form-control" id="UngVien_NoiDaoTaoID"
+										[(ngModel)]="ungVien.noiDaoTaoID" name="NoiDaoTaoID">
+										<option *ngFor="let item of noiDaoTao" [ngValue]="item.id">{{item.tenNoiDaoTao}}
+										</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_DiaChi">{{l("DiaChi")}}</label>
+									<input type="text" id="UngVien_DiaChi" class="form-control"
+										[(ngModel)]="ungVien.diaChi" name="DiaChi" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_Khoa">{{l("Khoa")}}</label>
+									<input type="text" id="UngVien_Khoa" class="form-control" [(ngModel)]="ungVien.khoa"
+										name="Khoa" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_ChuyenNganh">{{l("ChuyenNganh")}}</label>
+									<input type="text" id="UngVien_ChuyenNganh" class="form-control"
+										[(ngModel)]="ungVien.chuyenNganh" name="ChuyenNganh" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_TinhThanhID">{{l("TinhThanhID")}}</label>
+									<select class="form-control" id="UngVien_TinhThanhID"
+										[(ngModel)]="ungVien.tinhThanhID" name="TinhThanhID">
+										<option *ngFor="let item of tinhThanh" [selected]="item.maTinhThanh == 'HCM'"
+											[ngValue]="item.id">{{item.tenTinhThanh}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_XepLoaiCode">{{l("XepLoaiCode")}}</label>
+									<select class="form-control" id="UngVien_XepLoaiCode"
+										[(ngModel)]="ungVien.xepLoaiCode" name="XepLoaiCode">
+										<option *ngFor="let item of xepLoaiHocLuc" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UngVien_NamTotNghiep">{{l("NamTotNghiep")}}</label>
+									<select class="form-control" id="UngVien_NamTotNghiep"
+										[(ngModel)]="ungVien.namTotNghiep" name="NamTotNghiep">
+										<option *ngFor="let item of listYear" [ngValue]="item">{{item}}</option>
+									</select>
+									<!-- <input type="number" id="UngVien_NamTotNghiep" class="form-control" [(ngModel)]="ungVien.namTotNghiep" name="NamTotNghiep" /> -->
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_TrangThaiCode">{{l("TrangThaiCode")}}</label>
+									<select class="form-control" id="UngVien_TrangThaiCode"
+										[(ngModel)]="ungVien.trangThaiCode" name="TrangThaiCode">
+										<option *ngFor="let item of trangThai" [ngValue]="item.cdName">{{item.value}}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="UngVien_TienDoTuyenDungCode">{{l("TienDoTuyenDungCode")}}</label>
+									<select class="form-control" id="UngVien_TienDoTuyenDungCode"
+										[(ngModel)]="ungVien.tienDoTuyenDungCode" name="TienDoTuyenDungCode">
+										<option *ngFor="let item of tienDoTuyenDung" [ngValue]="item.cdName">
+											{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="input-group-append">
+									<dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+										<dxi-item itemType="group" colCount="4" cssClass="item-bold">
+											<dxi-item [colSpan]="2">
+												<dx-file-uploader uploadUrl="{{uploadUrl}}" [multiple]="true"
+													selectButtonText="Chọn tệp" labelText="" accept="*"
+													[(value)]="value" uploadMode="instantly"
+													(onUploaded)="setFullNameFile()">
+												</dx-file-uploader>
+											</dxi-item>
+
+
+
+										</dxi-item>
+									</dx-form>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<dx-data-grid id="gridContainer" [dataSource]="selectedRows"
+									[allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+									showBorders="true">
+									<dxo-paging [pageSize]="10"></dxo-paging>
+									<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+										[showInfo]="true">
+									</dxo-pager>
+									<dxi-column dataField="tepDinhKem" caption="Tập đính kèm"></dxi-column>
+									<dxi-column type="buttons" caption="Xem Xóa" cellTemplate="actionTemplate">
+									</dxi-column>
+
+
+									<div *dxTemplate="let d of 'actionTemplate'">
+										<div class="row">
+											<div class="col-4" (click)="showDetail(d)">
+												<span> <i class="fab fa-buffer"></i></span>
+											</div>
+											<div class="col-4" (click)="xoaFile(d)">
+												<span> <i class="fas fa-trash-alt"></i> </span>
+											</div>
+										</div>
+									</div>
+								</dx-data-grid>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="UngVien_Note">{{l("Ghi chú")}}</label>
+							<input type="note" id="UngVien_Note" class="form-control" [(ngModel)]="ungVien.note"
+								name="Note" />
+						</div>
+
+					</form>
+
+					<form #ungVien1Form="ngForm" novalidate autocomplete="off">
+	
+						
+						<div class="dx-fieldset">
+							<div class="dx-fieldset-header"><span><i class="fas fa-address-card"></i>
+									{{l("Quản lý lịch sử ")}} </span> </div>
+							<div class="dx-field">
+
+								<div class="list-container" *ngIf="lichsu" >
+									<dx-list [items]="lichsu" height="100%" *ngIf="lichsu" >
+										<div *dxTemplate="let item of 'item'">
+											<div class="product">
+												<div class="form-group">
+													<div class="col-6 mb-3">
+													<span>
+														<i class="fa fa-clock-o" aria-hidden="true"></i>
+													</span>	
+														{{ item.creationTime  |  momentFormat:'DD-MM-YYYY' }}
+													</div>
+													<div id="action-description">
+														<dx-text-box   [(value)]="item.chuDe"></dx-text-box>
+													</div>
+													
+													<div class="control-section">
+														<ckeditor  [value] ="item.noiDung"   name="item.noiDung" readonly="true"  ></ckeditor>
+													
+													
+													</div> 
+													<div *ngIf="item.tepDinhKem">
+													
+														<dx-button
+														stylingMode="contained"
+															icon="link"
+															text="File đính kèm"
+															type="danger"
+															[width]="200"
+															(onClick)="click(item.tepDinhKem)">
+														</dx-button>
+													
+													</div>
+												
+												</div>
+												<br>
+												<br>
+											</div>
+										</div>
+									</dx-list>
+								</div>
+
+								<br>
+								
+								<div class="dx-field-label">Chủ đề</div>
+								<div class="dx-field-value">
+									<dx-select-box  [items]="chude" valueExpr="id" [(value)]="value"
+										displayExpr="tenTemplate" placeholder="Chọn chủ đề" showFileList="true"
+										(onValueChanged)="getDaTa($event)">
+
+									</dx-select-box>
+								</div>
+							</div>
+		
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<div id="action-description">
+										<dx-text-box  
+										[(value)]="tenChuDe"></dx-text-box>
+									</div>
+									<div class="control-section">
+										<ckeditor [(ngModel)]="noiDungCD"  name="NoiDung1" [config]="{
+									
+											filebrowserBrowseUrl: '/assets/fileman/index.html?integration=tinymce4',
+											filebrowserImageBrowseUrl: '/assets/fileman/index.html?integration=ckeditor&type=image',
+											filebrowserUploadUrl: '/assets/fileman/core/connector/php/connector.php?command=QuickUpload&type=Files',
+											removeDialogTabs: 'link:upload;image:upload'}" ></ckeditor>
+									</div> 
+
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+
+								<dx-file-uploader
+								selectButtonText="Tập tin đính kèm" [multiple]="true"
+								labelText="" uploadUrl="{{uploadUrl}}"
+								accept="*" (onUploaded)="uploadTDK($event)"
+								uploadMode="instantly">
+
+							</dx-file-uploader>
+
+							</div>
+							
+						</div>
+						<br>
+						<br>
+						<br>
+						<br>
+
+						<div class="col-md-12" style="padding-top: 5px;">
+							<dx-button text="Gửi mail " type="success" icon="message" (onClick)="sendEmail()">
+							</dx-button>
+							&nbsp;
+							<dx-button text="Làm tươi" type="success" icon="refresh" style="width: 127px;"
+								(onClick)="trangChuUngVien()">
+							</dx-button>
+							<!-- &nbsp;
+							<dx-button text="Xem mẫu email " type="success" icon="exportpdf" (onClick)="save()">
+							</dx-button> -->
+						</div>
+						<br>
+						<br>
+					
+					
+					</form>
+				</div>
+				<br>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<style>
+	.dx-command-edit dx-focused {
+		text-align: center;
+		background: #78b1de;
+
+	}
+
+	.dx-command-edit dx-cell-focus-disabled dx-datagrid-drag-action {
+		color: white;
+	}
+
+	.dx-button-text {
+		line-height: normal;
+		color: white;
+
+
+	}
+
+	.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+		width: 100px;
+		min-width: 100px;
+		background-color: #258cbe;
+	}
+
+	.dx-datagrid-headers .dx-datagrid-table .dx-row>td {
+		border-bottom: 1px solid #ddd;
+		color: white;
+	}
+
+	::ng-deep .dx-htmleditor-content img {
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+::ng-deep .options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    margin-top: 20px;
+}
+
+::ng-deep .caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+::ng-deep .option {
+    margin-top: 10px;
+}
+
+.dx-field-label{
+    float: left;
+    width: 90px;
+}
+.dx-field-value{
+    float: left;
+    width: 470px
+}
+.col{
+    float: left;
+    width: 579px;
+    padding: 5px;
+}
+.form{
+    width: 100%;
+    padding: 30px 160px 30px 160px;
+    background-color: white;
+    box-shadow: 0 10px 12px #ddd;
+    border-radius: 10px;
+}
+::ng-deep .ql-editor{
+    height:300px;
+}
+.upload{
+    font-weight:bold;
+    color:#28a745;
+    margin-left: 15px;
+    line-height: 36px;
+}
+</style>

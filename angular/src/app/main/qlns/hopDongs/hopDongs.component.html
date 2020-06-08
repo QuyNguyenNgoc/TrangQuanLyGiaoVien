@@ -1,0 +1,135 @@
+﻿<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding-top: 5px;">
+                        <dx-button text="Thêm mới" type="success" icon="fa fa-plus" (onClick)="createHopDong()">
+                        </dx-button>
+                        &nbsp;
+                        <dx-button text="Chỉnh sửa" type="success" icon="rename" (onClick)="editHopDong()"
+                            [disabled]="a"> </dx-button>
+                        &nbsp;
+                        <dx-button text="xóa" type="success" icon="clear" (onClick)="deleteHopDong()" [disabled]="a">
+                        </dx-button>
+                        &nbsp;
+                        <dx-button text="Xem chi tiết" type="success" icon="menu"
+                            (onClick)="viewHopDongModal.show(data)" [disabled]="a"></dx-button>
+                        &nbsp;
+                        <dx-button text="In hợp đồng" type="success" icon="floppy" (onClick)="exportHTML()"
+                            [disabled]="a"></dx-button>
+                        &nbsp;
+                        <dx-button text="Xuất Excel" type="success" icon="exportpdf" (onClick)="exportToExcel()">
+                        </dx-button>
+
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Danh sách hợp đồng")}} </span>
+                        </h3>
+                    </div>
+                    
+                
+                    <br>
+                    <br>
+
+                    <div class="row align-items-center">
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <dx-data-grid #gridContainer id="gridContainer" [height]="530" [showColumnLines]="true"
+                                [(selectedRowKeys)]="selectedRowsData" (onLazyLoad)="getHopDongs()"
+                                (onRowClick)="startEdit($event)"
+                               [remoteOperations]="false"
+                                [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true"
+                                [allowColumnResizing]="true" [columnAutoWidth]="true" [(dataSource)]="listDataHopDong"
+                                [cellHintEnabled]="true">
+                                <dxo-selection mode="single"> </dxo-selection>
+                                <!-- <dxo-export [enabled]="true" fileName="ListHoSo" [allowExportSelectedData]="true">
+                                </dxo-export> -->
+                                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"
+                                    [showInfo]="true"></dxo-pager>
+                                <dxo-search-panel [visible]="true" placeholder="Nhập nội dung..." width="450">
+                                </dxo-search-panel>
+                                <dxo-header-filter [visible]="true"></dxo-header-filter>
+                                <dxo-filter-row [visible]="false"></dxo-filter-row>
+
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxi-column dataField="stt" alignment="left" [allowFiltering]="false" caption="STT">
+                                </dxi-column>
+                                <dxi-column dataField="hopDong.hoTenNhanVien" [allowFiltering]="false"
+                                    [allowSearch]="true" alignment="left" caption="Họ và tên nhân viên"> </dxi-column>
+                                <dxi-column dataField="hopDong.viTriCongViecCode" [allowSearch]="true" alignment="left"
+                                    caption="Vị trí công việc"> </dxi-column>
+                                <dxi-column dataField="donViCongTacValue" [allowSearch]="true" alignment="left"
+                                    caption="Đơn vị công tác"></dxi-column>
+                                <dxi-column dataField="hopDong.tenHopDong" [allowSearch]="true" [allowFiltering]="false"
+                                    alignment="left" caption="Tên hợp đồng"> </dxi-column>
+                                <dxi-column dataField="hopDong.loaiHopDongCode" [allowSearch]="true" alignment="left"
+                                    caption="Loại hợp đồng"> </dxi-column>
+                                <dxi-column dataField="hopDong.ngayKy" [allowSearch]="true" alignment="left"
+                                    dataType="date" format="d/M/yyyy" caption="Ngày ký"></dxi-column>
+                                <dxi-column dataField="hinhThucLamViecValue" [allowSearch]="true" alignment="center"
+                                    caption="Hình thức làm việc"> </dxi-column>
+                                <dxi-column dataField="hopDong.ngayCoHieuLuc" [allowSearch]="true" alignment="left"
+                                    dataType="date" format="d/M/yyyy" caption="Ngày có hiệu lực"></dxi-column>
+                                <dxi-column dataField="hopDong.luongCoBan" [allowFiltering]="false" [allowSearch]="true"
+                                    alignment="left" caption="Lương cơ bản"> </dxi-column>
+                                <dxi-column dataField="donViCongTacValue" [allowSearch]="true" alignment="left"
+                                    caption="Chức danh"></dxi-column>
+                                <!-- <dxi-column dataField="hopDong.tepDinhKem" [allowSearch]="true"  alignment="left" caption="Tệp tin đính kèm"> </dxi-column>          -->
+                            </dx-data-grid>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <viewHopDongModal #viewHopDongModal></viewHopDongModal>
+
+        </div>
+    </div>
+    <style>
+        #myButton {
+            color: white;
+
+        }
+
+        .dx-widget *:before {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .dx-button-content {
+            color: white;
+        }
+
+        .dx-row.dx-column-lines.dx-header-row {
+            background-color: #248cbf;
+        }
+
+        .dx-datagrid-borders>.dx-datagrid-headers,
+        .dx-datagrid-borders>.dx-datagrid-filter-panel {
+            border-top: 1px solid #ddd;
+        }
+
+        .dx-checkbox-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            background-color: #248cbf;
+        }
+
+        .dx-fileuploader-input-wrapper .dx-button {
+            float: left;
+            float: right;
+        }
+    </style>

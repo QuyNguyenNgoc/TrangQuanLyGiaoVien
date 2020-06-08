@@ -1,0 +1,79 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #configEmailForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="configEmail.id">{{l("Chỉnh sửa thông tin ")}}</span>
+                        <span *ngIf="!configEmail.id">{{l("Thêm mới Email ")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="ConfigEmail_DiaChiEmail">{{l("Địa chỉ Email ")}}</label>
+									<input type="text" id="ConfigEmail_DiaChiEmail" class="form-control" [(ngModel)]="configEmail.diaChiEmail" name="DiaChiEmail"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenHienThi">{{l("Tên hiển thị ")}}</label>
+									<input type="text" id="ConfigEmail_TenHienThi" class="form-control" [(ngModel)]="configEmail.tenHienThi" name="TenHienThi"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_DiaChiIP">{{l("Địa chỉ IP ")}}</label>
+									<input type="text" id="ConfigEmail_DiaChiIP" class="form-control" [(ngModel)]="configEmail.diaChiIP" name="DiaChiIP"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_CongSMTP">{{l("Cổng SMTP")}}</label>
+									<input type="number" id="ConfigEmail_CongSMTP" class="form-control" [(ngModel)]="configEmail.congSMTP" name="CongSMTP"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ConfigEmail_CheckSSL" class="kt-checkbox">
+										<input id="ConfigEmail_CheckSSL" type="checkbox" name="CheckSSL" [(ngModel)]="configEmail.checkSSL"> 
+										{{l("Xác thực SSL")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ConfigEmail_CheckThongTin" class="kt-checkbox">
+										<input id="ConfigEmail_CheckThongTin" type="checkbox" name="CheckThongTin" [(ngModel)]="configEmail.checkThongTin"> 
+										{{l("Kiểm tra thông tin")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenMien">{{l("Tên miền")}}</label>
+									<input type="text" id="ConfigEmail_TenMien" class="form-control" [(ngModel)]="configEmail.tenMien" name="TenMien"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenTruyCap">{{l("Tên truy cập")}}</label>
+									<input type="text" id="ConfigEmail_TenTruyCap" class="form-control" [(ngModel)]="configEmail.tenTruyCap" name="TenTruyCap"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_MatKhau">{{l("Mật khẩu")}}</label>
+									<input type="text" id="ConfigEmail_MatKhau" class="form-control" [(ngModel)]="configEmail.matKhau" name="MatKhau"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!configEmailForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

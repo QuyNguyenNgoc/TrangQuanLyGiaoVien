@@ -1,0 +1,584 @@
+<style>
+    /* .form-group {
+		margin-bottom: 0.7rem !important;
+	} */
+
+    /* .dropdown-content inputDropdown:hover {
+        background-color: #f1f1f1
+    } */
+</style>
+<div>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div [class]="containerClass">
+                    <div class="kt-subheader__main">
+                        <div class="col-xl-12" style="padding-top: 5px;">
+                            <dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+                            &nbsp;
+                            <dx-button text="Lưu" type="success" icon="save" style="width: 127px;"
+                            (onClick)="save()">
+                             </dx-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Chỉnh sửa hợp đồng ")}} </span>
+                        </h3>
+
+                    </div>
+                    <br>
+                    <br>
+                    <form #hoDongForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <label for="HopDong_HoTenNhanVien">{{l("HoTenNhanVien")}} <i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input #tenNV="ngModel" type="text" id="HopDong_HoTenNhanVien" class="form-control"
+                                        [readonly]="isReadonly" [(ngModel)]="hopDong.hoTenNhanVien" name="HoTenNhanVien"
+                                        required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="tenNV.invalid && (tenNV.dirty || tenNV.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="tenNV?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="tenNV?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding-top: 27px;">
+                                <div class="form-group">
+                                    <dx-button type="success" ng-model="all" icon="overflow" (onClick)="chonName()">
+                                    </dx-button>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="HopDong_NhanVienId">{{l("NhanVienId")}}<i
+                                            class="form-control-feedback">(*)</i> </label>
+                                    <input #maNV="ngModel" ng-disabled="all" type="text" id="HopDong_NhanVienId"
+                                        class="form-control" [readonly]="isReadonly" [(ngModel)]="hopDong.nhanVienId"
+                                        name="NhanVienId" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="maNV.invalid && (maNV.dirty || maNV.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="maNV?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="maNV?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding-top: 27px;">
+                                <div class="form-group">
+                                    <dx-button type="success" icon="user" (onClick)="chonName()">
+                                    </dx-button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_ViTriCongViecCode">{{l("ViTriCongViecCode")}}<i
+                                            class="form-control-feedback">(*)</i> </label>
+                                    <input #vitriCV="ngModel" ng-disabled="all" type="text"
+                                        id="HopDong_ViTriCongViecCode" class="form-control" [readonly]="isReadonly"
+                                        [(ngModel)]="hopDong.viTriCongViecCode" name="ViTriCongViecCode" required
+                                        pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="vitriCV.invalid && (vitriCV.dirty || vitriCV.touched)"
+                                        class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="vitriCV?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="vitriCV?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-1" style="padding-top: 27px;">
+                                <div class="form-group">
+                                    <dx-button type="success" icon="overflow" (onClick)="chonViTriCV()">
+                                    </dx-button>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label for="HoSo_DonViCongTacID">{{l("DonViCongTacID")}} <i
+                                            class="form-control-feedback">(*)</i> </label>
+                                    <input #donviCT="ngModel" type="text" id="HopDong_DonViCongTacID"
+                                        class="form-control" [readonly]="isReadonly" [(ngModel)]="donViCongtac"
+                                        name="DonViCongTacID" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="donviCT.invalid && (donviCT.dirty || donviCT.touched)"
+                                        class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="donviCT?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="donviCT?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding-top: 27px;">
+                                <div class="form-group">
+                                    <dx-button type="success" icon="overflow" (onClick)="chonDV()">
+                                    </dx-button>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="HopDong_SoHopDong">{{l("SoHopDong")}}</label>
+                                    <input type="text" id="HopDong_SoHopDong" class="form-control"
+                                        [(ngModel)]="hopDong.soHopDong" name="SoHopDong" readonly disabled />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="HopDong_TenHopDong">{{l("TenHopDong")}}<i class="form-control-feedback">(*)</i>
+                            </label>
+                            <input #tenHD="ngModel" type="text" id="HopDong_TenHopDong" class="form-control"
+                                [(ngModel)]="hopDong.tenHopDong" name="TenHopDong" required
+                                pattern="[^ ](.*|\n|\r|\r\n)*" />
+                            <div *ngIf="tenHD.invalid && (tenHD.dirty || tenHD.touched)" class="has-danger ">
+                                <div class="form-control-feedback" *ngIf="tenHD?.errors.required">
+                                    Trường này là bắt buộc.
+                                </div>
+                                <div class="form-control-feedback" *ngIf="tenHD?.errors.pattern">
+                                    Không nhập ký tự trắng đầu tiên.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_LoaiHopDongCode">{{l("LoaiHopDongCode")}} <i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input #loaiHD="ngModel" type="text" id="HopDong_LoaiHopDongCode"
+                                        class="form-control" [readonly]="isReadonly" [(ngModel)]="tenLoaiHD"
+                                        name="LoaiHopDongCode" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="loaiHD.invalid && (loaiHD.dirty || loaiHD.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="loaiHD?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="loaiHD?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding-top: 27px;">
+                                <div class="form-group">
+                                    <dx-button type="success" icon="columnchooser" (onClick)="chonLoaiHD()">
+                                    </dx-button>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="HopDong_ThoiHanHopDong">{{l("Thời hạn hợp đồng")}}</label>
+                                    <select class="form-control" id="HopDong_ThoiHanHopDong"
+                                        [(ngModel)]="hopDong.thoiHanHopDong" name="ThoiHanHopDong">
+                                        <option *ngFor="let item of thoiHanHopDong" [ngValue]="item.value">
+                                            {{item.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_HinhThucLamViecCode">{{l("HinhThucLamViecCode")}}</label>
+                                    <select class="form-control" id="HopDong_HinhThucLamViecCode"
+                                        [(ngModel)]="hopDong.hinhThucLamViecCode" name="HinhThucLamViecCode">
+                                        <option *ngFor="let item of hinhThucLamViec" [ngValue]="item.cdName">
+                                            {{item.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_LuongCoBan">{{l("LuongCoBan")}} <i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input type="number" id="HopDong_LuongCoBan" class="form-control"
+                                        [(ngModel)]="hopDong.luongCoBan" name="LuongCoBan" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_LuongDongBaoHiem">{{l("LuongDongBaoHiem")}}</label>
+                                    <input type="number" id="HopDong_LuongDongBaoHiem" class="form-control"
+                                        [(ngModel)]="hopDong.luongDongBaoHiem" name="LuongDongBaoHiem" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_TyLeHuongLuong">{{l("TyLeHuongLuong")}}</label>
+                                    <input type="number" id="HopDong_TyLeHuongLuong" class="form-control"
+                                        [(ngModel)]="hopDong.tyLeHuongLuong" name="TyLeHuongLuong" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_NgayKy">{{l("NgayKy")}} <i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input #ngayky="ngModel" class="form-control m-input" type="datetime" bsDatepicker
+                                        [(ngModel)]="ngayKy" id="HopDong_NgayKy" name="HopDong_NgayKy" required
+                                        pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="ngayky.invalid && (ngayky.dirty || ngayky.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="ngayky?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="ngayky?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_NgayCoHieuLuc">{{l("NgayCoHieuLuc")}}<i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input #ngaychl="ngModel" class="form-control m-input" type="datetime" bsDatepicker
+                                        [(ngModel)]="ngayCoHieuLuc" id="HopDong_NgayCoHieuLuc"
+                                        name="HopDong_NgayCoHieuLuc" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="ngaychl.invalid && (ngaychl.dirty || ngaychl.touched)"
+                                        class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="ngaychl?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="ngaychl?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="HopDong_NgayHetHan">{{l("NgayHetHan")}}<i
+                                            class="form-control-feedback">(*)</i></label>
+                                    <input #ngayhh="ngModel" class="form-control m-input" type="datetime" bsDatepicker
+                                        [(ngModel)]="ngayHetHan" id="HopDong_NgayHetHan" name="HopDong_NgayHetHan"
+                                        required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="ngayhh.invalid && (ngayhh.dirty || ngayhh.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="ngayhh?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="ngayhh?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="HopDong_TrichYeu">{{l("Trích yếu")}}</label>
+                                    <input type="text" id="HopDong_TrichYeu" class="form-control"
+                                        [(ngModel)]="hopDong.trichYeu" name="TrichYeu" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="HopDong_NguoiDaiDienCongTy">{{l("NguoiDaiDienCongTy")}}</label>
+                                    <input type="text" id="HopDong_NguoiDaiDienCongTy" class="form-control"
+                                        [(ngModel)]="hopDong.nguoiDaiDienCongTy" name="NguoiDaiDienCongTy" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="HopDong_ChucDanh">{{l("ChucDanh")}}</label>
+                                    <input type="text" id="HopDong_ChucDanh" class="form-control"
+                                        [(ngModel)]="hopDong.chucDanh" name="ChucDanh" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <!-- <input type="text" id="UngVien_TepDinhKem" class="form-control" [(ngModel)]="ungVien.tepDinhKem" name="TepDinhKem"> -->
+                                <div class="input-group-append">
+                                    <dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+                                        <dxi-item itemType="group" colCount="4" cssClass="item-bold">
+                                            <dxi-item [colSpan]="4">
+                                                <dx-file-uploader uploadUrl="{{uploadUrl}}" [multiple]="true"
+                                                    selectButtonText="Tập đính kèm" labelText="" type="success"
+                                                    accept="*" [(value)]="value" uploadMode="instantly"
+                                                    showFileList="false" (onUploaded)="setFullNameFile()">
+                                                </dx-file-uploader>
+                                            </dxi-item>
+                                        </dxi-item>
+                                    </dx-form>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <dx-data-grid id="gridContainer" [dataSource]="selectedRows" 
+                                    [allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                                    showBorders="true">
+                                    <dxo-paging [pageSize]="10"></dxo-paging>
+                                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+                                        [showInfo]="true">
+                                    </dxo-pager>
+                                    <dxi-column dataField="tepDinhKem" caption="Tập đính kèm" ></dxi-column>
+                                    <dxi-column type="buttons" caption="Xem Xóa" cellTemplate="actionTemplate"></dxi-column>
+                                    
+
+                                    <div *dxTemplate="let d of 'actionTemplate'">
+                                        <div class="row">
+                                            <div class="col-4" (click)="showDetail(d)">
+                                                <span> <i class="fab fa-buffer"></i></span>
+                                            </div>
+                                            <div class="col-4" (click)="xoaFile(d)">
+                                                <span> <i class="fas fa-trash-alt"></i> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dx-data-grid>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="HopDong_GhiChu">{{l("GhiChu")}}</label>
+                            <input type="text" id="HopDong_GhiChu" class="form-control" [(ngModel)]="hopDong.ghiChu"
+                                name="GhiChu" />
+                        </div>
+
+
+
+                        <br>
+
+                        <dx-popup [width]="1100" [height]="550" [showTitle]="true" title="Danh sách công việc "
+                            [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleViTriCV">
+                            <dx-data-grid id="gridContainer" [dataSource]="viTriCongViec" [allowColumnReordering]="true"
+                                [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
+                                (onRowDblClick)="chonViTri($event)">
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+                                    [showInfo]="true">
+
+                                </dxo-pager>
+                                <dxi-column dataField="value" [allowSearch]="true" caption="Vị trí công việc ">
+                                </dxi-column>
+
+                            </dx-data-grid>
+                        </dx-popup>
+
+                        <dx-popup [width]="670" [height]="500" [showTitle]="true" title="Danh sách  loại hợp đồng "
+                            [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleLHD">
+
+                            <dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+                                <dxi-item itemType="group" cssClass="item-bold">
+                                    <div class="row">
+                                        <div class="col-2" style="font-size: 15px;font-weight: bold;"> Công ty:
+                                        </div>
+                                        <div class="col-10">
+                                            <dx-select-box #BGDSelectBox [dataSource]="congTY" displayExpr="value"
+                                                (onValueChanged)="onValueChanged($event)" valueExpr='cdName'>
+                                            </dx-select-box>
+                                        </div>
+                                    </div>
+                                </dxi-item>
+                            </dx-form>
+                            <br>
+                            <br>
+
+                            <dx-data-grid id="gridContainer"  [height]= "500" [dataSource]="loaiHopDong" [allowColumnReordering]="true"
+                            [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
+                            (onRowDblClick)="chonLoaiHopDong($event)"   >
+                            <dxo-paging [pageSize]="10"></dxo-paging>
+                            <dxo-selection mode="single"> </dxo-selection>
+                        
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+                                [showInfo]="true">
+                            </dxo-pager>
+                            <dxi-column dataField="stt" [allowSearch]="true" alignment="center" [width]="50"
+                            caption="STT"> </dxi-column>
+                            <!-- <dxi-column dataField="id" [allowSearch]="true" alignment="center" 
+                                caption="ID"> </dxi-column> -->
+                            <dxi-column dataField="maTemplate" [allowSearch]="true" alignment="left" caption="Mã hợp đồng" >
+                            </dxi-column>
+                            <dxi-column dataField="tenTemplate" [allowSearch]="true" alignment="left" 
+                                caption="Loại hợp đồng">
+                            </dxi-column>
+                           
+                           
+                        </dx-data-grid>
+                        </dx-popup>
+
+                        <dx-popup [width]="1100" [height]="550" [showTitle]="true" title=" Danh sách nhân viên"
+                            [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleHoSo">
+                            <dx-data-grid #gridContainer id="gridContainer" [height]="530" [showColumnLines]="true"
+                                    
+                                    (onRowClick)="startEdit($event)"
+                                   [remoteOperations]="false"
+                                    [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true"
+                                    [allowColumnResizing]="true" [columnAutoWidth]="true" [(dataSource)]="listDataHoSo"
+                                    [cellHintEnabled]="true">
+                                    <dxo-selection mode="single"> </dxo-selection>
+                                    <!-- <dxo-export   [enabled]="true" fileName="ListUngVien" [allowExportSelectedData]="true"></dxo-export> -->
+                                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"
+                                        [showInfo]="true"></dxo-pager>
+                                    <dxo-search-panel [visible]="true" placeholder="Nhập nội dung..." width="450">
+                                    </dxo-search-panel>
+                                    <dxo-header-filter [visible]="true"></dxo-header-filter>
+                                    <dxo-filter-row [visible]="false"></dxo-filter-row>
+                                    <dxo-paging [pageSize]="10"></dxo-paging>
+                                    <dxi-column dataField="stt" alignment="left" [allowFiltering]="false" caption="STT">
+                                    </dxi-column>
+    
+                                    <dxi-column dataField="maChamCong" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Mã chấm công"> </dxi-column>
+                                    <dxi-column dataField="maNhanVien" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Mã nhân viên"> </dxi-column>
+                                    <dxi-column dataField="hoVaTen" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" caption="Họ và tên"> </dxi-column>
+                                    <dxi-column dataField="ngaySinh" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" dataType="date" format="d/M/yyyy" caption="Ngày sinh ">
+                                    </dxi-column>
+                                    <dxi-column dataField="trinhDoDaoTaoCode" [allowSearch]="true" alignment="left"
+                                    caption="Giới tính"> </dxi-column>
+                                    <dxi-column dataField="gioiTinhCode" [allowSearch]="true" alignment="left"
+                                        caption="Giới tính"> </dxi-column>
+                                    <dxi-column dataField="soCMND" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" caption="Số CMND"> </dxi-column>
+                                    <dxi-column dataField="ngayCap" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" dataType="date" format="d/M/yyyy" caption="Ngày cấp ">
+                                    </dxi-column>
+                                    <dxi-column dataField="noiCap" [allowSearch]="true" alignment="left"
+                                        caption="Nơi cấp"> </dxi-column>
+                                    <dxi-column dataField="mstCaNhan" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" caption="MST cá nhân"> </dxi-column>
+                                    <dxi-column dataField="dtDiDong" [allowSearch]="true" alignment="left"
+                                        caption="SĐT"> </dxi-column>
+                                    <dxi-column dataField="diaChiHKTT" [allowSearch]="true" alignment="left"
+                                        caption="Địa chỉ HKTT"> </dxi-column>
+    
+                                    <dxi-column dataField="chucDanh" [allowSearch]="true" alignment="left"
+                                        caption="Chức danh"> </dxi-column>
+                                 
+    
+                                    <dxi-column dataField="donViCongTacName" [allowSearch]="true" alignment="left"
+                                        caption="Đơn vị công tác"></dxi-column>
+                                        <dxi-column dataField="hopDongHienTai" [allowSearch]="true" alignment="left"
+                                        caption="Loại hợp đồng"></dxi-column>
+                                    <dxi-column dataField="ngayHetHan" [allowSearch]="true" alignment="left"
+                                        [allowFiltering]="false" dataType="date" format="d/M/yyyy" caption="Ngày hết hạn ">
+                                    </dxi-column>
+    
+                                    <dxi-column dataField="ngayThuViec" [allowSearch]="true" alignment="left"
+                                    [allowFiltering]="false" dataType="date" format="d/M/yyyy" caption="Ngày vào cty ">
+                                </dxi-column>
+                                    <dxi-column dataField="luongCoBan" [allowSearch]="true" alignment="left"
+                                        caption="Lương cơ bản"> </dxi-column> 
+                                     <dxi-column dataField="LuongDongBH" [allowSearch]="true" alignment="left"
+                                        caption="Lương đóng bảo hiểm"> </dxi-column>
+                                    <dxi-column dataField="tyLeDongBH" [allowSearch]="true" alignment="center"
+                                        caption="Tỷ lệ đóng bảo hiểm"> </dxi-column>
+    
+                                    <!-- <dxi-column dataField="trinhDoDaoTaoValue" [allowSearch]="true" alignment="left"
+                                        caption="Trình độ đào tạo"></dxi-column>
+                                    <dxi-column dataField="tinhTrangHonNhanValue" [allowSearch]="true" alignment="left"
+                                        caption="Tình trạng hôn nhân"> </dxi-column>
+                                    <dxi-column dataField="hoSo.chucDanh" [allowSearch]="true" alignment="left"
+                                        caption="Nguyên quán"></dxi-column> -->
+                                    <!-- <dxi-column dataField="tinhThanhIDHKTTValue" [allowSearch]="true" alignment="left"
+                                        caption="Địa chỉ HKTT"> </dxi-column> -->
+    
+    
+    
+                                        <dxi-column dataField="nganHangCode" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Ngân hàng"> </dxi-column>
+    
+                                        <dxi-column dataField="choNgoi" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Chỗ ngồi"> </dxi-column>
+    
+                                        <dxi-column dataField="tkNganHang" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Số tài khoản"> </dxi-column>
+    
+                                        <dxi-column dataField="soHD" [allowSearch]="true" [allowFiltering]="false"
+                                        alignment="left" caption="Số hợp đồng"> </dxi-column>
+                                        <dxi-column dataField="tenCty" [allowSearch]="true" 
+                                        alignment="left" caption="Tên công ty"> </dxi-column>
+                                 
+                                </dx-data-grid>
+                        </dx-popup>
+
+                        <dx-popup [width]="500" [height]="550" [showTitle]="true" title="Đơn vị công tác"
+                            [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisible">
+                            <div *dxTemplate="let data of 'content'">
+                                <p>
+                                    <inputDropdown #inputDropdown [class]="'form-control'" onclick=""
+                                        (ngModel)="getIdSelected($event)" [name]="'name'"></inputDropdown>
+                                </p>
+                            </div>
+                        </dx-popup>
+                       
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dx-command-edit dx-focused {
+        text-align: center;
+    background: #78b1de;
+   
+    }
+    .dx-command-edit dx-cell-focus-disabled dx-datagrid-drag-action{
+        color: white ;
+    }
+    .dx-button-text {
+    line-height: normal;
+    color: white;
+
+
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+    width: 100px;
+    min-width: 100px;
+	background-color: #258cbe;
+}
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    border-bottom: 1px solid #ddd;
+    color: white;
+}
+</style>

@@ -1,0 +1,142 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaUngVien")}} :</h6>
+                        {{ item.ungVien.maUngVien }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoVaTen")}} :</h6>
+                        {{ item.ungVien.hoVaTen }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViTriUngTuyenCode")}} :</h6>
+                        {{ item.viTriUngTuyenValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("KenhTuyenDungCode")}} :</h6>
+                        {{ item.kenhTuyenDungValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GioiTinhCode")}} :</h6>
+                        {{ item.gioiTinhValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgaySinh")}} :</h6>
+                        {{ item.ungVien.ngaySinh  |  momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoCMND")}} :</h6>
+                        {{ item.ungVien.soCMND }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayCap")}} :</h6>
+                        {{ item.ungVien.ngayCap  |  momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiCap")}} :</h6>
+                        {{ item.ungVien.noiCap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhID")}} :</h6>
+                        {{ item.tinhThanhValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhTrangHonNhanCode")}} :</h6>
+                        {{ item.tinhTrangHonNhanValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoDaoTaoCode")}} :</h6>
+                        {{ item.trinhDoDaoTaoValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoVanHoa")}} :</h6>
+                        {{ item.ungVien.trinhDoVanHoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiDaoTaoID")}} :</h6>
+                        {{ item.noiDaoTaoValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Khoa")}} :</h6>
+                        {{ item.ungVien.khoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChuyenNganh")}} :</h6>
+                        {{ item.ungVien.chuyenNganh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("XepLoaiCode")}} :</h6>
+                        {{ item.xepLoaiValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NamTotNghiep")}} :</h6>
+                        {{ item.ungVien.namTotNghiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrangThaiCode")}} :</h6>
+                        {{ item.trangThaiValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TienDoTuyenDungCode")}} :</h6>
+                        {{ item.tienDoTuyenDungValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TepDinhKem")}} :</h6>
+                        {{ item.ungVien.tepDinhKem }}
+                    </div>
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("RECORD_STATUS")}} :</h6>
+                        {{ item.ungVien.recorD_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MARKER_ID")}} :</h6>
+                        {{ item.ungVien.markeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("AUTH_STATUS")}} :</h6>
+                        {{ item.ungVien.autH_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CHECKER_ID")}} :</h6>
+                        {{ item.ungVien.checkeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("APPROVE_DT")}} :</h6>
+                        {{ item.ungVien.approvE_DT |  momentFormat:'DD-MM-YYYY' }}
+                    </div> -->
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DienThoai")}} :</h6>
+                        {{ item.ungVien.dienThoai }}        
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Email")}} :</h6>
+                        {{ item.ungVien.email }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChi")}} :</h6>
+                        {{ item.ungVien.diaChi }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

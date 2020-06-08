@@ -1,0 +1,126 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NhanVienId")}} :</h6>
+                        {{ item.hopDong.nhanVienId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoTenNhanVien")}} :</h6>
+                        {{ item.hopDong.hoTenNhanVien }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViTriCongViecCode")}} :</h6>
+                        {{ item.hopDong.viTriCongViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoHopDong")}} :</h6>
+                        {{ item.hopDong.soHopDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKy")}} :</h6>
+                        {{ item.hopDong.ngayKy | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViCongTacID")}} :</h6>
+                        {{ item.donViCongTacValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TenHopDong")}} :</h6>
+                        {{ item.hopDong.tenHopDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LoaiHopDongCode")}} :</h6>
+                        {{ item.hopDong.loaiHopDongCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HinhThucLamViecCode")}} :</h6>
+                        {{ item.hinhThucLamViecValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayCoHieuLuc")}} :</h6>
+                        {{ item.hopDong.ngayCoHieuLuc | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayHetHan")}} :</h6>
+                        {{ item.hopDong.ngayHetHan | momentFormat:'DD-MM-YYYY'}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongCoBan")}} :</h6>
+                        {{ item.hopDong.luongCoBan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongDongBaoHiem")}} :</h6>
+                        {{ item.hopDong.luongDongBaoHiem }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TyLeHuongLuong")}} :</h6>
+                        {{ item.hopDong.tyLeHuongLuong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NguoiDaiDienCongTy")}} :</h6>
+                        {{ item.hopDong.nguoiDaiDienCongTy }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChucDanh")}} :</h6>
+                        {{ item.hopDong.chucDanh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrichYeu")}} :</h6>
+                        {{ item.hopDong.trichYeu }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TepDinhKem")}} :</h6>
+                        {{ item.hopDong.tepDinhKem }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GhiChu")}} :</h6>
+                        {{ item.hopDong.ghiChu }}
+                    </div>
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("RECORD_STATUS")}} :</h6>
+                        {{ item.hopDong.recorD_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MARKER_ID")}} :</h6>
+                        {{ item.hopDong.markeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("AUTH_STATUS")}} :</h6>
+                        {{ item.hopDong.autH_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CHECKER_ID")}} :</h6>
+                        {{ item.hopDong.checkeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("APPROVE_DT")}} :</h6>
+                        {{ item.hopDong.approvE_DT | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div> -->
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Thời hạn hợp đồng")}} :</h6>
+                        {{ item.thoiHanhopDongTaoValue }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

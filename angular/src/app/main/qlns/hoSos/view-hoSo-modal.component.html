@@ -1,0 +1,380 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class= "row">
+                    <div class="col-6 mb-6">
+                        <div class="form-group">
+                            <img class="" style=" width: 98px;
+                            height: 117px;" alt="Pic" [src]="item.anhDaiDien">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("AnhDaiDien")}} :</h6>
+                        {{ item.hoSo.anhDaiDien }}
+                    </div> -->
+                    <div class="col-6 mb-6">
+                        <h6>{{l("MaNhanVien")}} :</h6>
+                        {{ item.maNhanVien }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoVaTen")}} :</h6>
+                        {{ item.hoVaTen }}
+                    </div>
+                
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("GioiTinhCode")}} :</h6>
+                        {{ item.gioiTinhValue }}
+                    </div> -->
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgaySinh")}} :</h6>
+                        {{ item.ngaySinh | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MSTCaNhan")}} :</h6>
+                        {{ item.mstCaNhan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViCongTacID")}} :</h6>
+                        {{ item.donViCongTacName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViTriCongViecCode")}} :</h6>
+                        {{ item.chucDanh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DanToc")}} :</h6>
+                        {{ item.danToc }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TonGiao")}} :</h6>
+                        {{ item.tonGiao }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocTich")}} :</h6>
+                        {{ item.quocTich }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoCMND")}} :</h6>
+                        {{ item.soCMND }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayCap")}} :</h6>
+                        {{ item.ngayCap | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiCap")}} :</h6>
+                        {{ item.noiCap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayHetHan")}} :</h6>
+                        {{ item.ngayHetHan | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoVanHoa")}} :</h6>
+                        {{ item.trinhDoVanHoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoDaoTaoCode")}} :</h6>
+                        {{ item.trinhDoDaoTaoCode }}
+                    </div>
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("NoiDaoTaoCode")}} :</h6>
+                        {{ item.noiDaoTaoValue }}
+                    </div> -->
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("Khoa")}} :</h6>
+                        {{ item.hoSo.khoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChuyenNganh")}} :</h6>
+                        {{ item.hoSo.chuyenNganh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NamTotNghiep")}} :</h6>
+                        {{ item.hoSo.namTotNghiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("XepLoaiCode")}} :</h6>
+                        {{ item.hoSo.xepLoaiCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhTrangHonNhanCode")}} :</h6>
+                        {{ item.hoSo.tinhTrangHonNhanCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TepDinhKem")}} :</h6>
+                        {{ item.hoSo.tepDinhKem }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtDiDong")}} :</h6>
+                        {{ item.hoSo.dtDiDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtCoQuan")}} :</h6>
+                        {{ item.hoSo.dtCoQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtNhaRieng")}} :</h6>
+                        {{ item.hoSo.dtNhaRieng }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtKhac")}} :</h6>
+                        {{ item.hoSo.dtKhac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailCaNhan")}} :</h6>
+                        {{ item.hoSo.emailCaNhan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailCoQuan")}} :</h6>
+                        {{ item.hoSo.emailCoQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailKhac")}} :</h6>
+                        {{ item.hoSo.emailKhac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NguyenQuan")}} :</h6>
+                        {{ item.hoSo.nguyenQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhID")}} :</h6>
+                        {{ item.hoSo.tinhThanhID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiSinh")}} :</h6>
+                        {{ item.hoSo.noiSinh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Skype")}} :</h6>
+                        {{ item.hoSo.skype }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Facebook")}} :</h6>
+                        {{ item.hoSo.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocGiaHKTT")}} :</h6>
+                        {{ item.hoSo.quocGiaHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhIDHKTT")}} :</h6>
+                        {{ item.hoSo.tinhThanhIDHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiHKTT")}} :</h6>
+                        {{ item.hoSo.diaChiHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoHoKhau")}} :</h6>
+                        {{ item.hoSo.soSoHoKhau }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoHoGiaDinh")}} :</h6>
+                        {{ item.hoSo.maSoHoGiaDinh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LaChuHo")}} :</h6>
+                        {{ item.hoSo.laChuHo }}
+                    </div> -->
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocGiaHN")}} :</h6>
+                        {{ item.quocGiaHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhIDHN")}} :</h6>
+                        {{ item.tinhThanhIDHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiHN")}} :</h6>
+                        {{ item.diaChiHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoVaTenLHKC")}} :</h6>
+                        {{ item.hoVaTenLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanHeLHKC")}} :</h6>
+                        {{ item.quanHeLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtDiDongLHKC")}} :</h6>
+                        {{ item.dtDiDongLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtNhaRiengLHKC")}} :</h6>
+                        {{ item.dtNhaRiengLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailLHKC")}} :</h6>
+                        {{ item.emailLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiLHKC")}} :</h6>
+                        {{ item.diaChiLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaChamCong")}} :</h6>
+                        {{ item.maChamCong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChucDanh")}} :</h6>
+                        {{ item.chucDanh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Cap")}} :</h6>
+                        {{ item.cap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Bac")}} :</h6>
+                        {{ item.bac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrangThaiLamViecCode")}} :</h6>
+                        {{ item.trangThaiLamViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanLyTrucTiep")}} :</h6>
+                        {{ item.quanLyTrucTiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanLyGianTiep")}} :</h6>
+                        {{ item.quanLyGianTiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaDiemLamViecCode")}} :</h6>
+                        {{ item.diaDiemLamViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoQLLaoDong")}} :</h6>
+                        {{ item.soSoQLLaoDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LoaiHopDongCode")}} :</h6>
+                        {{ item.hopDongHienTai }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayTapSu")}} :</h6>
+                        {{ item.ngayTapSu | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayThuViec")}} :</h6>
+                        {{ item.ngayThuViec |momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayChinhThuc")}} :</h6>
+                        {{ item.ngayChinhThuc |momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoNgayPhep")}} :</h6>
+                        {{ item.soNgayPhep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("BacLuongCode")}} :</h6>
+                        {{ item.bacLuongCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongCoBan")}} :</h6>
+                        {{ item.luongCoBan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongDongBH")}} :</h6>
+                        {{ item.luongDongBH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoCongChuan")}} :</h6>
+                        {{ item.soCongChuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViSoCongChuanCode")}} :</h6>
+                        {{ item.donViSoCongChuanCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TkNganHang")}} :</h6>
+                        {{ item.tkNganHang }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NganHangCode")}} :</h6>
+                        {{ item.nganHangCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ThamGiaCongDoan")}} :</h6>
+                        {{ item.thamGiaCongDoan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayThamGiaBH")}} :</h6>
+                        {{ item.ngayThamGiaBH | momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TyLeDongBH")}} :</h6>
+                        {{ item.tyLeDongBH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoBHXH")}} :</h6>
+                        {{ item.soSoBHXH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoBHXH")}} :</h6>
+                        {{ item.maSoBHXH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaTinhCap")}} :</h6>
+                        {{ item.maTinhCap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoTheBHYT")}} :</h6>
+                        {{ item.soTheBHYT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayHetHanBHYT")}} :</h6>
+                        {{ item.ngayHetHanBHYT |momentFormat:'DD-MM-YYYY' }}
+                    </div>
+                 
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoNoiKCB")}} :</h6>
+                        {{ item.maSoNoiKCB }}
+                    </div>
+                    <!-- <div class="col-6 mb-3">
+                        <h6>{{l("AUTH_STATUS")}} :</h6>
+                        {{ item.hoSo.autH_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("RECORD_STATUS")}} :</h6>
+                        {{ item.hoSo.recorD_STATUS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MARKER_ID")}} :</h6>
+                        {{ item.hoSo.markeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CHECKER_ID")}} :</h6>
+                        {{ item.hoSo.checkeR_ID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("APPROVE_DT")}} :</h6>
+                        {{ item.hoSo.approvE_DT | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div> -->
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

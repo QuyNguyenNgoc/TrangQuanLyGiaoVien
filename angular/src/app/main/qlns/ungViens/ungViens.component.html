@@ -1,0 +1,228 @@
+﻿<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item" >
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding: 4px 17px 4px 1px;">
+                        <dx-button #myButton text="Thêm mới"  stylingMode="text" type="default"  icon="fa fa-plus" (onClick)="createUngVien()"> </dx-button>
+                        &nbsp;
+                        <dx-button #myButton text="Chỉnh sửa"   stylingMode="text" type="default"  icon="rename" [disabled]= "a"
+                            (onClick)="editUngVien()"> </dx-button>
+                        &nbsp;
+                        <dx-button #myButton text="Xóa"  stylingMode="text" type="default" icon="clear"  [disabled]= "a"
+                        (onClick)="deleteUngVien()">
+                        </dx-button>
+                        &nbsp;
+
+                            <dx-button #myButton text="Xem chi tiết"  stylingMode="text" type="default" icon="menu"  [disabled]= "a"
+                            (onClick)="viewUngVienModal.show(data)"></dx-button>
+                            &nbsp;
+                            <!-- <dx-button text="Xuất Excel" type="success" icon="exportpdf"
+                            (onClick)="exportToExcel()"></dx-button>
+                            <span class="fileinput-button">
+                                <dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+                                    <dxi-item>
+                                        <dx-file-uploader  icon="save" uploadUrl="{{uploadUrl}}"   #fileUploader1  [multiple]="true"
+                                            selectButtonText="Import Excel" labelText="" accept="*" [(value)]="value"
+                                            uploadMode="instantly" showFileList = "false" (onUploaded)="importToExcel()">
+                                        </dx-file-uploader>
+                                    
+                                    </dxi-item>
+
+                                </dx-form>
+                            </span>
+                            <button (click)="dowloadTemplate()" class="btn btn-outline-success"><i
+                                class="fa fa-file-excel"></i> {{l("Tải về mẫu Template")}}</button> -->
+                    </div>
+                  
+                </div>
+                <div class="kt-subheader__toolbar">
+                    <div class="kt-subheader__wrapper">
+                        <div class="btn-group" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-outline-success dropdown-toggle"  style = "   background-color: #23479e;
+                            color: white;"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="far fa-file-excel"></i> {{"Xử lý Excel" | localize}}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-excel-operations" *dropdownMenu>
+                                <button (click)="exportToExcel()" class="btn btn-outline-success"><i
+                                    class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                          
+                                    <dx-file-uploader  icon="save" uploadUrl="{{uploadUrl}}"   #fileUploader1  [multiple]="true"
+                                        selectButtonText="Import To Excel" labelText="" accept="*" [(value)]="value"
+                                        uploadMode="instantly" showFileList = "false" (onUploaded)="importToExcel()">
+                                    </dx-file-uploader>
+                               
+                                <button (click)="dowloadTemplate()" class="btn btn-outline-success"><i
+                                    class="fa fa-file-excel"></i> {{l("Tải về mẫu Template")}}</button>
+                              
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span> <i class="fas fa-home"></i>  {{l("Trang chủ")}}   | {{l("Danh sách ứng viên")}} </span>
+                    </h3>
+                 
+                    </div>
+                    <br>
+                    <br>
+                
+                   
+                    <form class="kt-form" autocomplete="off">
+                        <div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="ViTriUngTuyenCodeFilter">{{l("ViTriUngTuyenCode")}}</label>
+                                        <!-- <input type="text" class="form-control" id="ViTriUngTuyenCodeFilter" name="viTriUngTuyenCodeFilter" [(ngModel)]="viTriUngTuyenCodeFilter"> -->
+                                        <select class="form-control" id="ViTriUngTuyenCodeFilter"
+                                            [(ngModel)]="viTriUngTuyenCodeFilter" name="viTriUngTuyenCodeFilter"
+                                            (change)="getUngViens()">
+                                            <option *ngFor="let item of viTriCongViec" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+                                            <option value="">--- Tất cả ---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="KenhTuyenDungCodeFilter">{{l("KenhTuyenDungCode")}}</label>
+                                        <!-- <input type="text" class="form-control" id="KenhTuyenDungCodeFilter" name="kenhTuyenDungCodeFilter" [(ngModel)]="kenhTuyenDungCodeFilter"> -->
+                                        <select class="form-control" id="KenhTuyenDungCodeFilter"
+                                            name="kenhTuyenDungCodeFilter" [(ngModel)]="kenhTuyenDungCodeFilter"
+                                            (change)="getUngViens()">
+                                            <option *ngFor="let item of kenhTuyenDung" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+                                            <option value="">--- Tất cả ---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="GioiTinhCodeFilter">{{l("GioiTinhCode")}}</label>
+                                        <!-- <input type="text" class="form-control" id="GioiTinhCodeFilter" name="gioiTinhCodeFilter" [(ngModel)]="gioiTinhCodeFilter"> -->
+                                        <select class="form-control" id="GioiTinhCodeFilter" name="gioiTinhCodeFilter"
+                                            [(ngModel)]="gioiTinhCodeFilter" (change)="getUngViens()">
+                                            <option *ngFor="let item of gioiTinh" [ngValue]="item.cdName">{{item.value}}
+                                            </option>
+                                            <option value="">--- Tất cả ---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="TienDoTuyenDungCodeFilter">{{l("TienDoTuyenDungCode")}}</label>
+                                        <!-- <input type="text" class="form-control" id="TienDoTuyenDungCodeFilter" name="tienDoTuyenDungCodeFilter" [(ngModel)]="tienDoTuyenDungCodeFilter"> -->
+                                        <select class="form-control" id="TienDoTuyenDungCodeFilter"
+                                            name="tienDoTuyenDungCodeFilter" [(ngModel)]="tienDoTuyenDungCodeFilter"
+                                            (change)="getUngViens()">
+                                            <option *ngFor="let item of tienDoTuyenDung" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+                                            <option value="">--- Tất cả ---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </form>
+
+                    <div class="row align-items-center">
+                        <div class="primeng-datatable-container col-12"
+                        [busyIf]="primengTableHelper.isLoading">
+                        <dx-data-grid #gridContainer id="gridContainer" [height]="530"  [showColumnLines]="true"
+                        [(selectedRowKeys)]="selectedRowsData" (onLazyLoad)="getUngViens()"
+                       (onRowClick)="startEdit($event)" 
+                        [remoteOperations]="false" [allowColumnReordering]="true" [rowAlternationEnabled]="true" 
+                        [showBorders]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                        [(dataSource)]="listDataUngVien" [cellHintEnabled]="true">
+                        <dxo-selection mode="single"> </dxo-selection>
+                        <!-- <dxo-export   [enabled]="true" fileName="ListUngVien" [allowExportSelectedData]="true"></dxo-export> -->
+                        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"
+                            [showInfo]="true"></dxo-pager>
+                            <dxo-search-panel [visible]="true" placeholder="Nhập nội dung..." width="450">
+                        </dxo-search-panel>
+                        <dxo-header-filter [visible]="true"></dxo-header-filter>
+                        <dxo-filter-row [visible]="false"></dxo-filter-row>
+                        <!-- <dxo- <dxo-filter-panel [visible]="true"></dxo-filter-panel>column-chooser [enabled]="true"></dxo-column-chooser> -->
+                        <dxo-paging [pageSize]="10"></dxo-paging>         
+                        <dxi-column dataField="stt"   alignment="left" caption="STT" [allowFiltering]="false" > </dxi-column>         
+                        <dxi-column dataField="ungVien.maUngVien" [allowSearch]="true"  [allowFiltering]="false" alignment="left" caption="Mã ứng viên"> </dxi-column>         
+                        <dxi-column dataField="ungVien.hoVaTen" [allowSearch]="true"  [allowFiltering]="false" alignment="left" caption="Họ và tên "> </dxi-column>
+                        <dxi-column dataField="viTriUngTuyenValue" [allowSearch]="true"  alignment="left" caption="Vị trí ứng tuyển"></dxi-column> 
+                        <dxi-column dataField="kenhTuyenDungValue" [allowSearch]="true" alignment="left" caption="Kênh tuyển dụng"> </dxi-column>         
+                        <dxi-column dataField="gioiTinhValue" [allowSearch]="true"  alignment="left" caption="Giới tính"> </dxi-column>
+                        <dxi-column dataField="ungVien.ngaySinh" [allowSearch]="true"  alignment="left"     dataType="date" format="d/M/yyyy"  caption="Ngày sinh"></dxi-column> 
+                        <dxi-column dataField="ungVien.soCMND" [allowSearch]="true"  alignment="center" [allowFiltering]="false" caption="Số CMND"> </dxi-column>  
+                        <dxi-column dataField="ungVien.dienThoai" [allowSearch]="true" [allowFiltering]="false" alignment="left" caption="Điện thoại"></dxi-column>
+                        <dxi-column dataField="ungVien.email" [allowSearch]="true" [allowFiltering]="false" alignment="left" caption="Email"> </dxi-column>       
+                        <dxi-column dataField="tinhThanhValue" [allowSearch]="true"  alignment="left" caption="Tỉnh/Thành phố"> </dxi-column>
+                        <dxi-column dataField="tinhTrangHonNhanValue" [allowSearch]="true"  alignment="left" caption="Tình trạng hôn nhân"></dxi-column> 
+                        <dxi-column dataField="trinhDoDaoTaoValue" [allowSearch]="true"   alignment="left" caption="Trình độ đào tạo"> </dxi-column>         
+                        <dxi-column dataField="noiDaoTaoValue" [allowSearch]="true"  alignment="left" caption="Nơi đào tạo"> </dxi-column>
+                        <dxi-column dataField="ungVien.xepLoaiCode" [allowSearch]="true" alignment="left" caption="Xếp loại"></dxi-column> 
+                        <dxi-column dataField="tienDoTuyenDungValue" [allowSearch]="true"   alignment="left" caption="Tiến độ tuyển dụng"> </dxi-column>         
+                        <!-- <dxi-column dataField="ungVien.tepDinhKem" [allowSearch]="true"  alignment="left" caption="Tệp đính kèm"> </dxi-column> -->
+                        <dxi-column dataField="ungVien.note" [allowSearch]="true"  alignment="left" caption="Ghi chú"></dxi-column>
+
+                        </dx-data-grid>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <viewUngVienModal #viewUngVienModal></viewUngVienModal>
+
+    </div>
+</div>
+
+<style>
+ 
+
+   #myButton  {  
+    color: white;  
+   
+}
+ .dx-widget *:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: white;
+}
+.dx-button-content {
+    color: white;
+}
+.dx-row.dx-column-lines.dx-header-row
+{
+    background-color:#248cbf ;
+}
+.dx-datagrid-borders > .dx-datagrid-headers, .dx-datagrid-borders > .dx-datagrid-filter-panel {
+    border-top: 1px solid #ddd;
+}
+.dx-checkbox-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    background-color:#248cbf ;
+}
+
+    /* #gridContainer .dx-scrollable-scroll {  
+    height: 23px !important;  
+}  
+    #gridContainer .dx-scrollable-scroll-content {  
+        background-color:#248cbf !important;
+        height: 23px !important;
+    }  */
+</style>
